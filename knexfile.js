@@ -4,41 +4,17 @@ module.exports = {
 
   development: {
     client: 'pg',
-    connection: {
-      filename: './dev.pg'
-    }
+    connection: 'postgres://localhost/DND_back'
   },
 
-  staging: {
-    client: 'postgresql',
-    connection: {
-      database: 'DND_back',
-      user:     'username',
-      password: 'password'
-    },
-    pool: {
-      min: 2,
-      max: 10
-    },
-    migrations: {
-      tableName: 'knex_migrations'
-    }
+  test: {
+    client: 'pg',
+    connection: 'postgres://localhost/DND_back'
   },
 
   production: {
-    client: 'postgresql',
-    connection: {
-      database: 'DND_back',
-      user:     'username',
-      password: 'password'
-    },
-    pool: {
-      min: 2,
-      max: 10
-    },
-    migrations: {
-      tableName: 'knex_migrations'
-    }
+    client: 'pg',
+    connection: process.env.DATABASE_URL
   }
 
 };
