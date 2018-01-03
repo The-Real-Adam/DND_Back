@@ -16,30 +16,6 @@ exports.up = (knex, Promise) => {
     table.specificType('hashed_password', 'CHAR(60)')
       .notNullable()
 
-    table.integer('sheet_id_1')
-      .references('id')
-      .inTable('sheet')
-      .onDelete('CASCADE')
-      .notNullable()
-
-    table.integer('sheet_id_2')
-      .references('id')
-      .inTable('sheet')
-      .onDelete('CASCADE')
-      .notNullable()
-
-    table.integer('sheet_id_3')
-      .references('id')
-      .inTable('sheet')
-      .onDelete('CASCADE')
-      .notNullable()
-
-    table.integer('sheet_id_4')
-      .references('id')
-      .inTable('sheet')
-      .onDelete('CASCADE')
-      .notNullable()
-
     table.timestamps(true, true)
 
   })
