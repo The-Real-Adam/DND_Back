@@ -43,51 +43,51 @@ exports.up = function(knex, Promise) {
 
     table.integer('strength')
       .notNullable()
-      .defaultTo('')
+      .defaultTo(0)
 
     table.integer('dexterity')
       .notNullable()
-      .defaultTo('')
+      .defaultTo(0)
 
     table.integer('constution')
       .notNullable()
-      .defaultTo('')
+      .defaultTo(0)
 
     table.integer('intellect')
       .notNullable()
-      .defaultTo('')
+      .defaultTo(0)
 
     table.integer('wisdom')
       .notNullable()
-      .defaultTo('')
+      .defaultTo(0)
 
     table.integer('charisma')
       .notNullable()
-      .defaultTo('')
+      .defaultTo(0)
 
     table.integer('max_hp')
       .notNullable()
-      .defaultTo('')
+      .defaultTo(0)
 
     table.integer('current_hp')
       .notNullable()
-      .defaultTo('')
+      .defaultTo(0)
 
     table.integer('armor_class')
       .notNullable()
-      .defaultTo('')
+      .defaultTo(0)
 
     table.integer('fortitude')
       .notNullable()
-      .defaultTo('')
+      .defaultTo(0)
 
     table.integer('reflex')
       .notNullable()
-      .defaultTo('')
+      .defaultTo(0)
 
     table.integer('will')
       .notNullable()
-      .defaultTo('')
+      .defaultTo(0)
 
     table.timestamps(true, true)
 

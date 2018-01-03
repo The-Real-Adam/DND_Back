@@ -11,9 +11,11 @@ exports.up = (knex, Promise) => {
 
     table.varchar('name', 63)
       .notNullable()
+      .defaultTo('')
 
     table.string('description')
       .notNullable()
+      .defaultTo('')
 
     table.timestamps(true, true)
   })
