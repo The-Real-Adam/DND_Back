@@ -88,6 +88,9 @@ exports.up = function(knex, Promise) {
     table.integer('will')
       .notNullable()
       .defaultTo('')
+
+    table.timestamps(true, true)
+
   })
 };
 

@@ -96,6 +96,8 @@ exports.up = function(knex, Promise) {
     table.integer('use_magic_device')
       .defaultTo('')
 
+    table.timestamps(true, true)
+
   })
 };
 

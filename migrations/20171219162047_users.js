@@ -22,19 +22,19 @@ exports.up = (knex, Promise) => {
       .onDelete('CASCADE')
       .notNullable()
 
-    table.integer('sheet_id_1')
+    table.integer('sheet_id_2')
       .references('id')
       .inTable('sheet')
       .onDelete('CASCADE')
       .notNullable()
 
-    table.integer('sheet_id_1')
+    table.integer('sheet_id_3')
       .references('id')
       .inTable('sheet')
       .onDelete('CASCADE')
       .notNullable()
 
-    table.integer('sheet_id_1')
+    table.integer('sheet_id_4')
       .references('id')
       .inTable('sheet')
       .onDelete('CASCADE')

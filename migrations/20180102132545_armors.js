@@ -1,6 +1,6 @@
 
 exports.up = function(knex, Promise) {
-  return knex.schema.createTable('weapons', (table) => {
+  return knex.schema.createTable('armors', (table) => {
     table.increments()
 
     table.integer('sheet_id')
@@ -9,31 +9,19 @@ exports.up = function(knex, Promise) {
       .onDelete('CASCADE')
       .notNullable()
 
-    table.varchar('weapon', 63)
+    table.varchar('armor', 63)
       .notNullable()
       .defaultTo('')
 
-    table.string('type')
+    table.varchar('armor_bonus', 63)
       .notNullable()
       .defaultTo('')
 
-    table.varchar('damage', 63)
+    table.varchar('max_dex_bonus', 63)
       .notNullable()
       .defaultTo('')
 
-    table.varchar('critical', 63)
-      .notNullable()
-      .defaultTo('')
-
-    table.varchar('range', 63)
-      .notNullable()
-      .defaultTo('')
-
-    table.varchar('damage_type', 63)
-      .notNullable()
-      .defaultTo('')
-
-    table.varchar('special', 63)
+    table.varchar('arcane_failure', 63)
       .notNullable()
       .defaultTo('')
 
@@ -47,6 +35,6 @@ exports.up = function(knex, Promise) {
 };
 
 exports.down = function(knex, Promise) {
-  return knex.schema.dropTableIfExists('weapons')
+  return knex.schema.dropTableIfExists('armors')
 
 };
