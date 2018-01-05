@@ -45,6 +45,10 @@ exports.up = function(knex, Promise) {
       .notNullable()
       .defaultTo('')
 
+    table.integer('char_level')
+      .notNullable()
+      .defaultTo(1)
+
     table.integer('initative')
       .notNullable()
       .defaultTo(0)
@@ -56,6 +60,10 @@ exports.up = function(knex, Promise) {
     table.integer('dr')
       .notNullable()
       .defaultTo(0)
+
+    table.integer('speed')
+      .notNullable()
+      .defaultTo(30)
 
     table.integer('strength')
       .notNullable()
@@ -78,6 +86,22 @@ exports.up = function(knex, Promise) {
       .defaultTo(0)
 
     table.integer('charisma')
+      .notNullable()
+      .defaultTo(0)
+
+    table.integer('bab_1')
+      .notNullable()
+      .defaultTo(1)
+
+    table.integer('bab_2')
+      .notNullable()
+      .defaultTo(0)
+
+    table.integer('bab_3')
+      .notNullable()
+      .defaultTo(0)
+
+    table.integer('bab_4')
       .notNullable()
       .defaultTo(0)
 
