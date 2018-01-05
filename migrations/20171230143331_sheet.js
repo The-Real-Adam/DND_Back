@@ -17,6 +17,10 @@ exports.up = function(knex, Promise) {
       .notNullable()
       .defaultTo('')
 
+    table.varchar('char_size', 63)
+      .notNullable()
+      .defaultTo('')
+
     table.varchar('char_align', 63)
       .notNullable()
       .defaultTo('')
@@ -29,9 +33,9 @@ exports.up = function(knex, Promise) {
       .notNullable()
       .defaultTo('')
 
-    table.varchar('char_age', 63)
+    table.integer('char_age')
       .notNullable()
-      .defaultTo('')
+      .defaultTo(0)
 
     table.varchar('char_height', 63)
       .notNullable()
@@ -40,6 +44,18 @@ exports.up = function(knex, Promise) {
     table.varchar('char_languages', 256)
       .notNullable()
       .defaultTo('')
+
+    table.integer('initative')
+      .notNullable()
+      .defaultTo(0)
+
+    table.integer('sr')
+      .notNullable()
+      .defaultTo(0)
+
+    table.integer('dr')
+      .notNullable()
+      .defaultTo(0)
 
     table.integer('strength')
       .notNullable()
@@ -62,6 +78,14 @@ exports.up = function(knex, Promise) {
       .defaultTo(0)
 
     table.integer('charisma')
+      .notNullable()
+      .defaultTo(0)
+
+    table.integer('cmb')
+      .notNullable()
+      .defaultTo(0)
+
+    table.integer('cmd')
       .notNullable()
       .defaultTo(0)
 
