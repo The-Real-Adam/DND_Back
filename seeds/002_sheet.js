@@ -14,6 +14,7 @@ exports.seed = function(knex, Promise) {
         char_weight: "185 lbs",
         char_age: 25,
         char_height: "6 feet",
+        char_gender: "Male",
         char_languages: "Hallit, Common, Celestial",
         char_level: 17,
         initative: 4,

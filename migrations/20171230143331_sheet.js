@@ -41,6 +41,10 @@ exports.up = function(knex, Promise) {
       .notNullable()
       .defaultTo('')
 
+    table.varchar('char_gender', 63)
+      .notNullable()
+      .defaultTo('')
+
     table.varchar('char_languages', 256)
       .notNullable()
       .defaultTo('')
