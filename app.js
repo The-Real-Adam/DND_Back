@@ -8,6 +8,8 @@ const bodyParser = require('body-parser');
 const index = require('./routes/index');
 const users = require('./routes/users');
 const sheet = require('./routes/sheet');
+const journal = require('./routes/journal');
+
 
 const app = express();
 
@@ -30,11 +32,13 @@ app.use(function(req, res, next) {
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS,PATCH, DELETE')
   next()
-}) 
+})
 
 app.use('/', index);
 app.use('/users', users);
 app.use('/sheet', sheet);
+app.use('/journal', journal);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
