@@ -9,6 +9,11 @@ const index = require('./routes/index');
 const users = require('./routes/users');
 const sheet = require('./routes/sheet');
 const journal = require('./routes/journal');
+const equipment = require('./routes/equipment');
+const armor = require('./routes/armor');
+const weapons = require('./routes/weapons');
+const feats = require('./routes/feats');
+const spells = require('./routes/spells');
 
 
 const app = express();
@@ -38,6 +43,11 @@ app.use('/', index);
 app.use('/users', users);
 app.use('/sheet', sheet);
 app.use('/journal', journal);
+app.use('/equipment', equipment);
+app.use('/armor', armor);
+app.use('/weapons', weapons);
+app.use('/feats', feats);
+app.use('/spells', spells);
 
 
 // catch 404 and forward to error handler

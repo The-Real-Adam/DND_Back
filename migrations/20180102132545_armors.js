@@ -13,17 +13,17 @@ exports.up = function(knex, Promise) {
       .notNullable()
       .defaultTo('')
 
-    table.varchar('armor_bonus', 63)
+    table.integer('armor_bonus')
       .notNullable()
-      .defaultTo('')
+      .defaultTo(0)
 
-    table.varchar('max_dex_bonus', 63)
+    table.integer('max_dex_bonus')
       .notNullable()
-      .defaultTo('')
+      .defaultTo(0)
 
-    table.varchar('arcane_failure', 63)
+    table.integer('arcane_failure', 63)
       .notNullable()
-      .defaultTo('')
+      .defaultTo(0)
 
     table.varchar('weight', 63)
       .notNullable()
