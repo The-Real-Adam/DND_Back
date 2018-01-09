@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 
 const index = require('./routes/index');
 const users = require('./routes/users');
+const token = require('./routes/token');
 const sheet = require('./routes/sheet');
 const journal = require('./routes/journal');
 const equipment = require('./routes/equipment');
@@ -41,6 +42,7 @@ app.use(function(req, res, next) {
 })
 
 app.use('/', index);
+app.use('/token', token);
 app.use('/users', users);
 app.use('/sheet', sheet);
 app.use('/journal', journal);

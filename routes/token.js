@@ -3,7 +3,9 @@ const router = express.Router()
 const knex = require('../knex')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const secret = process.env.JWT_KEY
+require('dotenv').config()
+const SECRET = process.env.JWT_KEY
+
 
 router.post('/', (req, res, next) => {
   const {
@@ -28,15 +30,21 @@ router.post('/', (req, res, next) => {
       .where('email', email)
       .first()
       .then((data) => {
+        // console.log('data is: ', data)
         let match = bcrypt.compareSync(password, data.hashed_password)
+        // console.log('password is: ', password)
+        // console.log('hashed_password is: ', data.hashed_password)
+        // console.log('match is:', match)
+        // console.log('compare occured')
+        console.log('SECRET is: ', SECRET)
         if (!match) {
           res.sendStatus(404)
           return
         }
-        const token = jwt.sign({
-          usersId: data.users_id || data.id,
-          id: data.id
-        }, secret)
+
+        let token = jwt.sign({
+          data: data[0]
+        }, SECRET)
 
         res.cookie('token', token,
           { httpOnly: true }
@@ -49,32 +57,32 @@ router.post('/', (req, res, next) => {
       .catch((err) => next(err))
   }
 
-  knex('users')
-    .where('username', email)
-    .first()
-    .then((data) => {
-      let match = bcrypt.compareSync(password, data.hashed_password)
-      if (!match) {
-        res.sendStatus(404)
-        return
-      }
-      const token = jwt.sign({
-        usersId: data.users_id || data.id,
-        id: data.id
-      }, secret)
-
-      res.cookie(
-        'token', token,
-        { httpOnly: true }
-      )
-      res.status(200)
-      delete data.hashed_password
-      res.send(data)
-      return
-    })
-    .catch((err) => {
-      next(err)
-    })
+//   knex('users')
+//     .where('username', email)
+//     .first()
+//     .then((data) => {
+//       let match = bcrypt.compareSync(password, data.hashed_password)
+//       if (!match) {
+//         res.sendStatus(404)
+//         return
+//       }
+//       const token = jwt.sign({
+//         usersId: data.users_id || data.id,
+//         id: data.id
+//       }, SECRET)
+//
+//       res.cookie(
+//         'token', token,
+//         { httpOnly: true }
+//       )
+//       res.status(200)
+//       delete data.hashed_password
+//       res.send(data)
+//       return
+//     })
+//     .catch((err) => {
+//       next(err)
+//     })
 })
 
 router.delete('/', (req, res, next) => {
