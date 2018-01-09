@@ -39,4 +39,82 @@ router.get('/:id', (req, res, next) => {
     .catch((err) => next(err))
 })
 
+router.post('/', function(req, res, next) {
+  const {
+    sheet_id,
+    name,
+    description,
+    value
+  } = req.body
+  knex('equipment')
+    .insert({
+      sheet_id: sheet_id,
+      name: name,
+      description: description,
+      value: value
+    }, '*')
+    .then(() => {
+      console.log('should render')
+      res.sendStatus(200)
+    })
+})
+
+router.patch('/:id', function(req, res, next) {
+  const id = Number(req.params.id)
+  if (Number.isNaN(id)) {
+    return next()
+  }
+
+  knex('equipment')
+    .where('id', id)
+    .then((equipment) => {
+      console.log('equipment is: ', equipment)
+      if (!equipment) {
+        throw boom.create(404, 'Not Found')
+      }
+
+      console.log('reqbody',req.body);
+      let myUpdate = {}
+
+      if (req.body.name) {
+        myUpdate.name = req.body.name
+      }
+      if (req.body.description) {
+        myUpdate.description = req.body.description
+      }
+      if (req.body.value) {
+        myUpdate.value = req.body.value
+      }
+
+      console.log('myUpdate', myUpdate);
+
+      knex('equipment')
+        .where('id', id)
+        .update(myUpdate)
+        .then((row) => {
+          console.log('row', row);
+          res.sendStatus(200)
+        })
+    })
+    .catch((err) => {
+      next(err)
+    })
+})
+
+router.delete('/:id', function(req, res, next) {
+  const id = Number(req.params.id)
+  knex('equipment')
+    .where('id', id)
+    .returning([
+      'name',
+      'description',
+      'value'
+    ])
+    .del()
+    .then((deletedRow) => {
+      res.send(deletedRow[0])
+    })
+    .catch((err) => next(err))
+})
+
 module.exports = router;
