@@ -19,6 +19,7 @@ exports.up = (knex, Promise) => {
 
     table.integer('spell_level')
       .notNullable()
+      .defaultTo(0)
 
     table.string('description')
       .notNullable()
@@ -42,6 +43,7 @@ exports.up = (knex, Promise) => {
 
     table.boolean('spell_resistance')
       .notNullable()
+      .defaultTo(true)
 
 
     table.timestamps(true, true)

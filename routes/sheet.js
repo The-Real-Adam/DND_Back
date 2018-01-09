@@ -56,6 +56,7 @@ router.get('/:id', function(req, res, next) {
 })
 
 router.post('/', function(req, res, next) {
+  const id = sheet.id
   const {
     char_name,
     char_class,
@@ -127,7 +128,7 @@ router.post('/', function(req, res, next) {
     fortitude: fortitude,
     reflex: reflex,
     will: will,
-    users_id: users.id
+    users_id: 1
   }, '*')
   .then(() => {
     console.log('should render')
@@ -137,96 +138,142 @@ router.post('/', function(req, res, next) {
 
 router.patch('/:id', function(req, res, next) {
   const id = Number(req.params.id)
-
   if (Number.isNaN(id)) {
     return next()
   }
 
   knex('sheet')
     .where('id', id)
-    .then((rows) => {
-      if (!rows) {
+    .then((sheet) => {
+      console.log('sheet is: ', sheet)
+      if (!sheet) {
         throw boom.create(404, 'Not Found')
       }
 
-      const {
-        char_name,
-        char_class,
-        char_size,
-        char_align,
-        char_race,
-        char_weight,
-        char_age,
-        char_height,
-        char_gender,
-        char_languages,
-        char_level,
-        initative,
-        sr,
-        dr,
-        speed,
-        strength,
-        dexterity,
-        constution,
-        intellect,
-        wisdom,
-        charisma,
-        bab_1,
-        bab_2,
-        bab_3,
-        bab_4,
-        cmb,
-        cmd,
-        max_hp,
-        current_hp,
-        armor_class,
-        fortitude,
-        reflex,
-        will
-      } = req.body
+      console.log('reqbody',req.body);
+      let myUpdate = {}
 
-      const updateRow = {}
+      if (req.body.char_name) {
+        myUpdate.char_name = req.body.char_name
+      }
+      if (req.body.char_class) {
+        myUpdate.char_class = req.body.char_class
+      }
+      if (req.body.char_size) {
+        myUpdate.char_size = req.body.char_size
+      }
+      if (req.body.char_align) {
+        myUpdate.char_align = req.body.char_align
+      }
+      if (req.body.char_race) {
+        myUpdate.char_race = req.body.char_race
+      }
+      if (req.body.char_weight) {
+        myUpdate.char_weight = req.body.char_weight
+      }
+      if (req.body.char_age) {
+        myUpdate.char_age = req.body.char_age
+      }
+      if (req.body.char_height) {
+        myUpdate.char_height = req.body.char_height
+      }
+      if (req.body.char_gender) {
+         myUpdate.char_gender = req.body.char_gender
+       }
+      if (req.body.char_languages) {
+        myUpdate.char_languages = req.body.char_languages
+      }
+      if (req.body.char_level) {
+        myUpdate.char_level = req.body.char_level
+      }
+      if (req.body.initative) {
+        myUpdate.initative = req.body.initative
+      }
+      if (req.body.sr) {
+        myUpdate.sr = req.body.sr
+      }
+      if (req.body.dr) {
+        myUpdate.dr = req.body.dr
+      }
+      if (req.body.speed) {
+        myUpdate.speed = req.body.speed
+      }
+      if (req.body.strength) {
+        myUpdate.strength = req.body.strength
+      }
+      if (req.body.dexterity) {
+        myUpdate.dexterity = req.body.dexterity
+      }
+      if (req.body.constution) {
+        myUpdate.constution = req.body.constution
+      }
+      if (req.body.intellect) {
+        myUpdate.intellect = req.body.intellect
+      }
+      if (req.body.wisdom) {
+        myUpdate.wisdom = req.body.wisdom
+      }
+      if (req.body.charisma) {
+        myUpdate.charisma = req.body.charisma
+      }
+      if (req.body.bab_1) {
+        myUpdate.bab_1 = req.body.bab_1
+      }
+      if (req.body.bab_2) {
+        myUpdate.bab_2 = req.body.bab_2
+      }
+      if (req.body.bab_3) {
+        myUpdate.bab_3 = req.body.bab_3
+      }
+      if (req.body.bab_4) {
+        myUpdate.bab_4 = req.body.bab_4
+      }
+      if (req.body.cmb) {
+        myUpdate.cmb = req.body.cmb
+      }
+      if (req.body.cmd) {
+        myUpdate.cmd = req.body.cmd
+      }
+      if (req.body.max_hp) {
+        myUpdate.max_hp = req.body.max_hp
+      }
+      if (req.body.current_hp) {
+        myUpdate.current_hp = req.body.current_hp
+      }
+      if (req.body.armor_class) {
+        myUpdate.armor_class = req.body.armor_class
+      }
+      if (req.body.fortitude) {
+        myUpdate.fortitude = req.body.fortitude
+      }
+      if (req.body.reflex) {
+        myUpdate.reflex = req.body.reflex
+      }
+      if (req.body.will) {
+        myUpdate.will = req.body.will
+      }
 
-      if (char_name) { updateRow.char_name = char_name }
-      if (char_class) { updateRow.char_class = char_class }
-      if (char_size) { updateRow.char_size = char_size }
-      if (char_align) { updateRow.char_align = char_align }
-      if (char_race) { updateRow.char_race = char_race }
-      if (char_weight) { updateRow.char_weight = char_weight }
-      if (char_age) { updateRow.char_age = char_age }
-      if (char_height) { updateRow.char_height = char_height }
-      if (char_gender) { updateRow.char_gender = char_gender }
-      if (char_languages) { updateRow.char_languages = char_languages }
-      if (char_level) { updateRow.char_level = char_level }
-      if (initative) { updateRow.initative = initative }
-      if (sr) { updateRow.sr = sr }
-      if (dr) { updateRow.dr = dr }
-      if (speed) { updateRow.speed = speed }
-      if (strength) { updateRow.strength = strength }
-      if (dexterity) { updateRow.dexterity = dexterity }
-      if (constution) { updateRow.constution = constution }
-      if (intellect) { updateRow.intellect = intellect }
-      if (wisdom) { updateRow.wisdom = wisdom }
-      if (charisma) { updateRow.charisma = charisma }
-      if (bab_1) { updateRow.bab_1 = bab_1 }
-      if (bab_2) { updateRow.bab_2 = bab_2 }
-      if (bab_3) { updateRow.bab_3 = bab_3 }
-      if (bab_4) { updateRow.bab_4 = bab_4 }
-      if (cmb) { updateRow.cmb = cmb }
-      if (cmd) { updateRow.cmd = cmd }
-      if (max_hp) { updateRow.max_hp = max_hp }
-      if (current_hp) { updateRow.current_hp = current_hp }
-      if (armor_class) { updateRow.armor_class = armor_class }
-      if (fortitude) { updateRow.fortitude = fortitude }
-      if (reflex) { updateRow.reflex = reflex }
-      if (will) { updateRow.will = will }
+      console.log('myUpdate', myUpdate);
+      // res.send(`${knex('sheet')
+      //   .where('id', id)
+      //   .update(myUpdate)
+      //   .toSQL().sql}`)
 
       knex('sheet')
-        .update(updateRow, '*')
         .where('id', id)
+        .update(myUpdate)
         .then((row) => {
-          res.send(row[0])
+          console.log('row', row);
+          res.sendStatus(200)
         })
+
+      // knex('sheet')
+      //   .update(myUpdate, '*')
+      //   .where('id', id)
+        // .then((row) => {
+        //   console.log('row is:', row)
+        //   res.send(row)
+        // })
     })
     .catch((err) => {
       next(err)

@@ -14,7 +14,6 @@ router.get('/', (req, res, next) => {
     .orderBy('id')
     .then((weapons) => {
       console.log('weapons is: ', weapons)
-
       res.setHeader('Content-Type', 'application/json')
       res.send(JSON.stringify(weapons))
     })
