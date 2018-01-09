@@ -1,29 +1,29 @@
-var express = require('express');
-var router = express.Router();
+'use strict';
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  knex('users')
-    .select('id', 'username', 'email')
-
-});
-
+const express = require('express');
+const router = express.Router();
+const bcrypt = require('bcrypt-as-promised');
+const knex = require('../knex');
 
 router.post('/', (req, res, next) => {
-  knex('users')
-    .insert({
-      username: req.body.username,
-      email: req.body.email
-    }, '*')
-    .then((newUser) => {
-      let newRow = {
-        username: newUser[0].username,
-        email: newUser[0].email
-      }
-      res.send(newRow)
+  bcrypt.hash(req.body.password, 12)
+    .then((hashed_password) => {
+      console.log(hashed_password)
+      return knex('users')
+        .insert({
+          username: req.body.username,
+          email: req.body.email,
+          hashed_password: hashed_password
+        }, '*');
     })
-    .catch((err) => next(err))
-})
-
+    .then((users) => {
+      const user = users[0];
+      delete user.hashed_password;
+      res.sendStatus(200);
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
 
 module.exports = router;
