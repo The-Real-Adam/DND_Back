@@ -39,51 +39,71 @@ router.get('/:id', (req, res, next) => {
     .catch((err) => next(err))
 })
 
-router.patch('/:id', (req, res, next) => {
-  const id = Number(req.params.sheet_id)
-  knex('journal')
-    .where('id', id)
-    .first()
-    .update({
-      id: req.body.id,
-      journal_heading: req.body.journal_heading,
-      journal_entry: req.body.journal_entry
-    }, '*')
-    .then((journalUpdate) => {
-      let newUpdate ={
-        id: journalUpdate[0].id,
-        journal_heading: journalUpdate[0].journal_heading,
-        journal_entry: journalUpdate[0].journal_entry
-      }
-      res.setHeader('Content-Type', 'application/json')
-      res.send(newUpdate)
-    })
-    .catch((err) => next(err))
-})
-
-router.post('/', (req, res, next) => {
+router.post('/', function(req, res, next) {
+  const {
+    sheet_id,
+    journal_heading,
+    journal_entry
+  } = req.body
   knex('journal')
     .insert({
-      sheet_id: req.body.sheet_id,
-      journal_heading: req.body.journal_heading,
-      journal_entry: req.body.journal_entry
+      sheet_id: sheet_id,
+      journal_heading: journal_heading,
+      journal_entry: journal_entry
     }, '*')
-    .then((newJournal) => {
-      let newRow = {
-        sheet_id: newJournal[0].sheet_id,
-        journal_heading: newJournal[0].journal_heading,
-        journal_entry: newJournal[0].journal_entry
-      }
-      res.send(newRow)
+    .then(() => {
+      console.log('should render')
+      res.sendStatus(200)
     })
-    .catch((err) => next(err))
 })
 
-router.delete('/:id', (req, res, next) => {
+router.patch('/:id', function(req, res, next) {
+  const id = Number(req.params.id)
+  if (Number.isNaN(id)) {
+    return next()
+  }
+
+  knex('journal')
+    .where('id', id)
+    .then((journal) => {
+      console.log('journal is: ', journal)
+      if (!journal) {
+        throw boom.create(404, 'Not Found')
+      }
+
+      console.log('reqbody',req.body);
+      let myUpdate = {}
+
+      if (req.body.journal_heading) {
+        myUpdate.journal_heading = req.body.journal_heading
+      }
+      if (req.body.journal_entry) {
+        myUpdate.journal_entry = req.body.journal_entry
+      }
+
+      console.log('myUpdate', myUpdate);
+
+      knex('journal')
+        .where('id', id)
+        .update(myUpdate)
+        .then((row) => {
+          console.log('row', row);
+          res.sendStatus(200)
+        })
+    })
+    .catch((err) => {
+      next(err)
+    })
+})
+
+router.delete('/:id', function(req, res, next) {
   const id = Number(req.params.id)
   knex('journal')
     .where('id', id)
-    .returning(['id', 'journal_heading', 'journal_entry'])
+    .returning([
+      'journal_heading',
+      'journal_entry'
+    ])
     .del()
     .then((deletedRow) => {
       res.send(deletedRow[0])
