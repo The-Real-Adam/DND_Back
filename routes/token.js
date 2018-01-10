@@ -8,6 +8,7 @@ const SECRET = process.env.JWT_KEY
 
 
 router.post('/', (req, res, next) => {
+  console.log('Hit Post Route')
   const {
     email,
     password
@@ -45,7 +46,7 @@ router.post('/', (req, res, next) => {
         let token = jwt.sign({
           data: data[0]
         }, SECRET)
-
+        console.log('token is:', token)
         res.cookie('token', token,
           { httpOnly: true }
         )
@@ -57,32 +58,6 @@ router.post('/', (req, res, next) => {
       .catch((err) => next(err))
   }
 
-//   knex('users')
-//     .where('username', email)
-//     .first()
-//     .then((data) => {
-//       let match = bcrypt.compareSync(password, data.hashed_password)
-//       if (!match) {
-//         res.sendStatus(404)
-//         return
-//       }
-//       const token = jwt.sign({
-//         usersId: data.users_id || data.id,
-//         id: data.id
-//       }, SECRET)
-//
-//       res.cookie(
-//         'token', token,
-//         { httpOnly: true }
-//       )
-//       res.status(200)
-//       delete data.hashed_password
-//       res.send(data)
-//       return
-//     })
-//     .catch((err) => {
-//       next(err)
-//     })
 })
 
 router.delete('/', (req, res, next) => {

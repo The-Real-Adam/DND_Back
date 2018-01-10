@@ -11,7 +11,6 @@ router.post('/', (req, res, next) => {
       console.log(hashed_password)
       return knex('users')
         .insert({
-          username: req.body.username,
           email: req.body.email,
           hashed_password: hashed_password
         }, '*');

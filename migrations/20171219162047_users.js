@@ -3,11 +3,6 @@ exports.up = (knex, Promise) => {
 
     table.increments()
 
-    table.varchar('username', 63)
-      .notNullable()
-      .defaultTo('')
-      .unique()
-
     table.varchar('email', 63)
       .notNullable()
       .defaultTo('')

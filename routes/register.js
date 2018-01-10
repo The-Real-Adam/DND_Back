@@ -8,16 +8,10 @@ let registered
 router.post('/', (req, res, next) => {
 
   const {
-    username,
     email,
     password
   } = req.body
 
-  if (!username || !username.trim()) {
-    res.status(400)
-    res.send('Username must not be empty')
-    return
-  }
 
   if (!email || !email.trim()) {
     res.status(400)
@@ -35,7 +29,6 @@ router.post('/', (req, res, next) => {
   bcrypt.hash(password, 5, (err, hash) => {
     knex('users')
       .insert({
-        username,
         email,
         hashed_password: hash
       }, '*')

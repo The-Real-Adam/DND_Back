@@ -10,6 +10,7 @@ router.get('/:id', function(req, res, next) {
   const id = Number(req.params.id)
   knex('sheet')
     .select(
+      'users_id',
       'char_name',
       'char_class',
       'char_size',
