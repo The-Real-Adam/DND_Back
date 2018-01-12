@@ -156,7 +156,7 @@ router.post('/', auth, function(req, res, next) {
     fortitude: fortitude,
     reflex: reflex,
     will: will,
-    users_id: user_id //THIS NEEDS FIXED
+    users_id: user_id 
   }, '*')
   .then(() => {
     console.log('should render')
