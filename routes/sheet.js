@@ -1,12 +1,39 @@
 const knex = require('../knex');
 const express = require('express');
 const router = express.Router();
+const jwt = require('jsonwebtoken')
+const secret = process.env.JWT_KEY
 
-router.get('/', function(req, res, next) {
-  // code goes here
+const auth = (req, res, next) => {
+  console.log('cookies', req.cookies);
+  jwt.verify(req.cookies['dnd-jwt'], secret, (err, payload) => {
+    if (err) {
+      console.log('you hit your own error code dumbass', err);
+      res.sendStatus(401)
+    }
+    console.log('before', payload);
+    req.payload = payload
+    console.log("payload: >>>", payload)
+    next()
+  })
+}
+
+router.get('/', auth, function(req, res, next) {
+  let id = req.payload.usersId
+  knex('sheet')
+    .select('id','char_name','char_class', 'char_level', 'users_id')
+    .where('users_id', id)
+    .then((sheet) => {
+      if (sheet.length < 1) {
+        return res.sendStatus(404)
+      }
+      res.setHeader('Content-Type', 'application/json')
+      res.send(JSON.stringify(sheet))
+    })
+    .catch((err) => next(err))
 })
 
-router.get('/:id', function(req, res, next) {
+router.get('/:id', auth, function(req, res, next) {
   const id = Number(req.params.id)
   knex('sheet')
     .select(
@@ -56,8 +83,8 @@ router.get('/:id', function(req, res, next) {
     .catch((err) => next(err))
 })
 
-router.post('/', function(req, res, next) {
-  const id = sheet.id
+router.post('/', auth, function(req, res, next) {
+  let user_id = req.payload.usersId
   const {
     char_name,
     char_class,
@@ -129,11 +156,11 @@ router.post('/', function(req, res, next) {
     fortitude: fortitude,
     reflex: reflex,
     will: will,
-    users_id: 1
+    users_id: user_id //THIS NEEDS FIXED
   }, '*')
   .then(() => {
     console.log('should render')
-    res.redirect('/:id')
+    res.sendStatus('200')
   })
 })
 
@@ -255,11 +282,6 @@ router.patch('/:id', function(req, res, next) {
       }
 
       console.log('myUpdate', myUpdate);
-      // res.send(`${knex('sheet')
-      //   .where('id', id)
-      //   .update(myUpdate)
-      //   .toSQL().sql}`)
-
       knex('sheet')
         .where('id', id)
         .update(myUpdate)
@@ -267,14 +289,6 @@ router.patch('/:id', function(req, res, next) {
           console.log('row', row);
           res.sendStatus(200)
         })
-
-      // knex('sheet')
-      //   .update(myUpdate, '*')
-      //   .where('id', id)
-        // .then((row) => {
-        //   console.log('row is:', row)
-        //   res.send(row)
-        // })
     })
     .catch((err) => {
       next(err)

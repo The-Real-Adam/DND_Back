@@ -47,7 +47,7 @@ exports.up = function(knex, Promise) {
 
     table.varchar('char_languages', 256)
       .notNullable()
-      .defaultTo('')
+      .defaultTo('Common')
 
     table.integer('char_level')
       .notNullable()
@@ -71,27 +71,27 @@ exports.up = function(knex, Promise) {
 
     table.integer('strength')
       .notNullable()
-      .defaultTo(0)
+      .defaultTo(10)
 
     table.integer('dexterity')
       .notNullable()
-      .defaultTo(0)
+      .defaultTo(10)
 
     table.integer('constution')
       .notNullable()
-      .defaultTo(0)
+      .defaultTo(10)
 
     table.integer('intellect')
       .notNullable()
-      .defaultTo(0)
+      .defaultTo(10)
 
     table.integer('wisdom')
       .notNullable()
-      .defaultTo(0)
+      .defaultTo(10)
 
     table.integer('charisma')
       .notNullable()
-      .defaultTo(0)
+      .defaultTo(10)
 
     table.integer('bab_1')
       .notNullable()

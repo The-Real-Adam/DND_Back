@@ -31,28 +31,27 @@ router.post('/', (req, res, next) => {
       .where('email', email)
       .first()
       .then((data) => {
-        // console.log('data is: ', data)
+        if(!data){
+          res.sendStatus(404)
+        }
+
         let match = bcrypt.compareSync(password, data.hashed_password)
-        // console.log('password is: ', password)
-        // console.log('hashed_password is: ', data.hashed_password)
-        // console.log('match is:', match)
-        // console.log('compare occured')
-        console.log('SECRET is: ', SECRET)
+
         if (!match) {
           res.sendStatus(404)
           return
         }
 
+        console.log(data);
         let token = jwt.sign({
-          data: data[0]
+          usersId: data.id
         }, SECRET)
+
         console.log('token is:', token)
-        res.cookie('token', token,
-          { httpOnly: true }
-        )
+        res.send({'token': token})
         res.status(200)
         delete data.hashed_password
-        res.send(data)
+        // res.send(data)
         return
       })
       .catch((err) => next(err))
