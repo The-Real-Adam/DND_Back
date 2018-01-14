@@ -37,6 +37,7 @@ router.get('/:id', auth, function(req, res, next) {
   const id = Number(req.params.id)
   knex('sheet')
     .select(
+      'id',
       'users_id',
       'char_name',
       'char_class',
@@ -156,7 +157,7 @@ router.post('/', auth, function(req, res, next) {
     fortitude: fortitude,
     reflex: reflex,
     will: will,
-    users_id: user_id 
+    users_id: user_id
   }, '*')
   .then(() => {
     console.log('should render')
@@ -164,7 +165,7 @@ router.post('/', auth, function(req, res, next) {
   })
 })
 
-router.patch('/:id', function(req, res, next) {
+router.patch('/:id', auth, function(req, res, next) {
   const id = Number(req.params.id)
   if (Number.isNaN(id)) {
     return next()
