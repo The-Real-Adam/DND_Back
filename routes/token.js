@@ -15,12 +15,14 @@ router.post('/', (req, res, next) => {
   } = req.body
 
   if (!email || email.trim() === ('')) {
+    console.log('no email')
     res.status(400)
     res.send('Bad email or password')
     return
   }
 
   if (!password || password.trim() === ('')) {
+    console.log('no password')
     res.status(400)
     res.send('Bad email or password')
     return
@@ -36,7 +38,7 @@ router.post('/', (req, res, next) => {
         }
 
         let match = bcrypt.compareSync(password, data.hashed_password)
-
+        console.log('Match is a Match');
         if (!match) {
           res.sendStatus(404)
           return
