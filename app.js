@@ -36,6 +36,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(function(req, res, next) {
+app.enable('trust proxy')
   // res.header({'Access-Control-Allow-Origin': 'http://localhost:3001'})
   res.header({'Access-Control-Allow-Origin': 'https://critical-path.herokuapp.com'})
   res.header('Access-Control-Allow-Credentials', 'true')
