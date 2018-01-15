@@ -2,16 +2,17 @@ const knex = require('../knex');
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken')
-const secret = process.env.JWT_KEY
+const SECRET = process.env.JWT_KEY
 
 const auth = (req, res, next) => {
-  console.log('cookies', req.cookies);
-  jwt.verify(req.cookies['dnd-jwt'], secret, (err, payload) => {
+  console.log('SECRET IN SHEETS IS: ', SECRET)
+  console.log('cookies', req.cookies)
+  jwt.verify(req.cookies['dnd-jwt'], SECRET, (err, payload) => {
     if (err) {
       console.log('you hit your own error code dumbass', err);
       res.sendStatus(401)
     }
-    console.log('before', payload);
+    console.log('before payload', payload);
     req.payload = payload
     console.log("payload: >>>", payload)
     next()

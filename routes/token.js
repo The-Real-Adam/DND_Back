@@ -6,15 +6,6 @@ const jwt = require('jsonwebtoken')
 require('dotenv').config()
 const SECRET = process.env.JWT_KEY
 
-router.get('/token', (req, res, next) => {
-  jwt.verify(req.cookies.token, SECRET, (err, payload) => {
-    if (err) {
-      res.send(false)
-    } else {
-      res.send(true)
-  }
-  })
-})
 
 router.post('/', (req, res, next) => {
   console.log('Hit Post Route')
