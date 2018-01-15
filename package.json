@@ -10,8 +10,8 @@
   "dependencies": {
     "bcrypt": "^1.0.3",
     "bcrypt-as-promised": "^1.1.0",
-    "body-parser": "~1.17.1",
     "cookie-parser": "~1.4.3",
+    "body-parser": "~1.17.1",
     "cors": "^2.8.4",
     "debug": "~2.6.3",
     "dotenv": "^4.0.0",
