@@ -19,7 +19,7 @@ const auth = (req, res, next) => {
   })
 }
 
-router.get('/', auth, function(req, res, next) {
+router.get('/', function(req, res, next) {
   let id = req.payload.usersId
   knex('sheet')
     .select('id','char_name','char_class', 'char_level', 'users_id')
@@ -34,7 +34,7 @@ router.get('/', auth, function(req, res, next) {
     .catch((err) => next(err))
 })
 
-router.get('/:id', auth, function(req, res, next) {
+router.get('/:id', function(req, res, next) {
   const id = Number(req.params.id)
   knex('sheet')
     .select(
