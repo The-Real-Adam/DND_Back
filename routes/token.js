@@ -43,7 +43,7 @@ router.post('/', (req, res, next) => {
           res.sendStatus(404)
           return
         }
-
+        console.log('SECRET IS: ', SECRET)
         console.log('Data in token is:',data);
         let token = jwt.sign({
           usersId: data.id
