@@ -6,7 +6,7 @@ const SECRET = process.env.JWT_KEY
 
 const auth = (req, res, next) => {
   console.log('SECRET IN SHEETS IS: ', SECRET)
-  console.log('cookies', req.cookies.dnd)
+  console.log('cookies', req.cookies)
   jwt.verify(req.cookies.dnd, SECRET, (err, payload) => {
     if (err) {
       console.log('you hit your own error code dumbass', err);
