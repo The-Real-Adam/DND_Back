@@ -7,8 +7,8 @@ const SECRET = process.env.JWT_KEY
 const auth = (req, res, next) => {
   console.log('SECRET IN SHEETS IS: ', SECRET)
   console.log('cookies', req.cookies)
-  console.log('request is: >>>>>>>', req)
-  jwt.verify(req.cookies.dnd, SECRET, (err, payload) => {
+  console.log('request is: >>>>>>>', req.headers)
+  jwt.verify(req.headers['x-token'], SECRET, (err, payload) => {
     if (err) {
       console.log('you hit your own error code dumbass', err);
       res.sendStatus(401)
